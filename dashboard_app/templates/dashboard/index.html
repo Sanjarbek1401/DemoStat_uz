@@ -1,0 +1,891 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'zbekiston Demografik Ma'lumotlar Dashbordi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #4A90E2;
+            --accent-color: #00cc99;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-description {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn-cta {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            color: var(--primary-color);
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .preview-container {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: 400px;
+            background: var(--gradient-accent);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            background: white;
+            padding: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Gender Selection Buttons */
+        .gender-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .gender-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gender-btn.active,
+        .gender-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 0 2rem;
+        }
+
+        .timeline {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-range {
+            width: 100%;
+            height: 8px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .current-year {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .year-label {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* Map Container */
+        .map-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px; /* Adjust as needed */
+            margin: 0 auto;
+            padding: 2rem;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        #map {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Region Info Overlay */
+        .region-info-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #222;
+            z-index: 10;
+            min-width: 160px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            border-left: 3px solid #166cb3;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .region-header {
+            font-weight: 700;
+            font-size: 1em;
+            letter-spacing: 1px;
+            color: #166cb3;
+        }
+
+        .region-stats {
+            margin-bottom: 4px;
+        }
+        
+        .region-stats span {
+            font-weight: 600;
+            color: #222;
+        }
+
+        /* Vertical Age Range */
+        .vertical-age-range-container {
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 1rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .age-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .vertical-slider-wrapper {
+            height: 400px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .vertical-slider {
+            writing-mode: bt-lr;
+            -webkit-appearance: slider-vertical;
+            width: 8px;
+            height: 180px;
+            background: var(--gradient-primary);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .age-range-display {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .social-media a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Map specific styles */
+        #map path.region {
+            stroke: white;
+            stroke-width: 1px;
+            transition: all 0.3s ease;
+        }
+
+        #map path.region:hover {
+            stroke: #2c3e50;
+            stroke-width: 2px;
+            opacity: 0.8;
+        }
+
+        #map path.active {
+            stroke: #2c3e50;
+            stroke-width: 3px;
+        }
+
+        .region-tooltip {
+            position: absolute;
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            pointer-events: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .tooltip-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="logo">
+                <a href="/" class="d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-chart-line fa-2x text-primary me-2"></i>
+                    <span class="fw-bold text-dark">DemoStat UZ</span>
+                </a>
+            </div>
+            <nav class="d-flex">
+                <ul class="nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="/" class="nav-link {% if current_page == 'home' %}active{% endif %}">Bosh sahifa</a></li>
+                    <li class="nav-item"><a href="/#dashboard" class="nav-link">Interaktiv xarita</a></li>
+                    <li class="nav-item"><a href="/resources/" class="nav-link {% if current_page == 'resources' %}active{% endif %}">Resurslar</a></li>
+                    <li class="nav-item"><a href="/about/" class="nav-link {% if current_page == 'about' %}active{% endif %}">Biz haqimizda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">O'zbekiston demografik ma'lumotlar</h1>
+                <p class="hero-subtitle">Interaktiv dashboard orqali O'zbekiston demografiyasini real vaqtda kuzating va tahlil qiling</p>
+                <a href="#dashboard" class="btn btn-cta">
+                    <i class="fas fa-chart-area me-2"></i>
+                    Dashboardni ko'rish
+                </a>
+                
+                <!-- <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number country-total-population">...</span>
+                        <span class="stat-label">Jami Aholi</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number country-youth-population">...</span>
+                        <span class="stat-label">Yoshlar (14-30 yosh)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number country-children-population">...</span>
+                        <span class="stat-label">Bolalar (0-14 yosh)</span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Asosiy imkoniyatlar</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Interaktiv xarita</h3>
+                        <p class="feature-description">O'zbekiston viloyatlari bo'yicha demografik ma'lumotlarni interaktiv xarita orqali ko'ring va tahlil qiling.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating" style="animation-delay: 0.2s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Real vaqt ma'lumotlar</h3>
+                        <p class="feature-description">2021-yildan 2050-yilgacha bo'lgan demografik prognozlar va real ma'lumotlar bilan ishlang.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating" style="animation-delay: 0.4s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3 class="feature-title">Kuchli filtrlash</h3>
+                        <p class="feature-description">Yosh guruhi, jins va yil bo'yicha ma'lumotlarni filtrlang va o'zingizga kerakli ma'lumotni toping.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating" style="animation-delay: 0.6s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Jins bo'yicha tahlil</h3>
+                        <p class="feature-description">Erkak va ayol aholini alohida-alohida yoki birgalikda tahlil qilish imkoniyati.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating" style="animation-delay: 0.8s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Vaqt bo'yicha kuzatish</h3>
+                        <p class="feature-description">Timeline slider yordamida demografik o'zgarishlarni vaqt bo'yicha kuzating.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="feature-card floating" style="animation-delay: 1s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Mobil uyish</h3>
+                        <p class="feature-description">Barcha qurilmalarda mukammal ishlaydi - kompyuter, planshet va telefonda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section class="dashboard-preview" id="dashboard">
+        <div class="container">
+            <h2 class="section-title">Interaktiv dashboard</h2>
+            
+            <!-- Gender Selection -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="gender-buttons">
+                        <button type="button" class="gender-btn active" data-gender="jami">
+                            <i class="fas fa-users me-2"></i>Jami
+                        </button>
+                        <button type="button" class="gender-btn" data-gender="male">
+                            <i class="fas fa-mars me-2"></i>Erkak
+                        </button>
+                        <button type="button" class="gender-btn" data-gender="female">
+                            <i class="fas fa-venus me-2"></i>Ayol
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timeline Slider -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="timeline-container">
+                        <span class="year-label left">2026</span>
+                        <div class="timeline">
+                            <span class="current-year">2026</span>
+                            <input type="range" class="form-range" min="2026" max="2050" step="1" value="2026" id="year-slider">
+                        </div>
+                        <span class="year-label right">2050</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Row -->
+            <div class="row" style="height: 100%; min-height: 600px;">
+                <!-- Vertical Age Range Slider -->
+                <div class="col-md-2" style="height: 100%; display: flex; flex-direction: column; justify-content: stretch;">
+                    <div class="vertical-age-range-container" style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: stretch;">
+                        <span class="age-label top">85+</span>
+                        <div class="vertical-slider-wrapper" style="flex: 1; display: flex; flex-direction: column; justify-content: stretch;">
+                            <!-- Hide the max age slider visually but keep it in the DOM for JS logic -->
+                            <input type="range" class="vertical-slider d-none" id="age-max-slider" min="4" max="85" step="1" value="85">
+                            <input type="range" class="vertical-slider" id="age-min-slider" min="0" max="85" step="5" value="0">
+                        </div>
+                        <span class="age-label bottom">0</span>
+                        <div class="age-range-display mt-2">Yoshi: <span class="current-age-range">0-85+</span></div>
+                    </div>
+                </div>
+                
+                <!-- Map Container -->
+                <div class="col-md-10">
+                    <div class="map-container">
+                        <!-- Respublika info overlay (left side) -->
+                        <div class="republic-info-overlay" style="position: absolute; bottom: 20px; left: 20px; background: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #222; z-index: 10; min-width: 160px; box-shadow: 0 2px 8px rgba(0,0,0,0.10); border-left: 3px solid #166cb3; display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <i class="fas fa-flag" style="color: #166cb3; font-size: 1.2em;"></i>
+                                <span style="font-weight: 700; font-size: 1em; letter-spacing: 1px;">Respublika</span>
+                            </div>
+                            <div class="region-stats" style="margin-bottom: 4px;">
+                                <span style="color: #666;">Respublika bo'yicha:</span><br>
+                                <span style="font-weight: 600; color: #166cb3;">Jami:</span>&nbsp;<span class="republic_total_population">0</span> kishi
+                            </div>
+                            <div class="region-stats">
+                                <span style="font-weight: 600; color: #166cb3;">Shundan:</span>&nbsp;<span class="republic-age-range" style="font-weight: 500; color: #444;">0-85+</span>&nbsp;&nbsp;<span class="republic-youth" style="font-size: 1em; font-weight: 600; color: #166cb3;">2,573,820</span>&nbsp;<span style="color: #888;">kishi</span>
+                            </div>
+                        </div>
+                        <div id="map"></div>
+                        
+                        <!-- Region info overlay -->
+                        <div class="region-info-overlay" style="position: absolute; top: 20px; right: 20px; background: #fff; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #222; z-index: 10; min-width: 160px; box-shadow: 0 2px 8px rgba(0,0,0,0.10); border-left: 3px solid #166cb3; display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <i class="fas fa-map-marker-alt" style="color: #166cb3; font-size: 1.2em;"></i>
+                                <span class="region-header" style="font-weight: 700; font-size: 1em; letter-spacing: 1px; color: #166cb3;">Viloyat</span>
+                            </div>
+                            <div class="region-stats" style="margin-bottom: 4px;">
+                                <span style="color: #666;">Hudud bo'yicha:</span><br>
+                                <span style="font-weight: 600; color: #166cb3;">Jami:</span>&nbsp;<span class="region-total" style="font-size: 1em; font-weight: 600; color: #222;">0</span>&nbsp;<span style="color: #888;">kishi</span>
+                            </div>
+                            <div class="region-stats">
+                                <span style="font-weight: 600; color: #166cb3;">Shundan:</span>&nbsp;<span class="region-age-range" style="font-weight: 500; color: #444;">0-85+</span>&nbsp;&nbsp;<span class="region-youth" style="font-size: 1em; font-weight: 600; color: #166cb3;">0</span>&nbsp;<span style="color: #888;">kishi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <!-- <section class="quick-stats">
+        <div class="container">
+            <h2 class="section-title">Tezkor Statistika</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>35,648,100</h3>
+                    <p>Jami aholi (2025)</p>
+                </div>
+                <div class="stat-card">
+                    <h3>52.3%</h3>
+                    <p>Shahar aholisi</p>
+                </div>
+                <div class="stat-card">
+                    <h3>29.2</h3>
+                    <p>O'rtacha yosh</p>
+                </div>
+                <div class="stat-card">
+                    <h3>2.4%</h3>
+                    <p>Yillik o'sish sur'ati</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Batafsil ma'lumot olish</h2>
+            <p class="cta-description">O'zbekiston demografiyasi haqida ko'proq ma'lumot olish va professional tahlillar uchun biz bilan bog'laning</p>
+            <!-- <a href="#contact" class="btn-cta">
+                <i class="fas fa-envelope me-2"></i>
+                Bog'lanish
+            </a> -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h5><i class="fas fa-chart-line me-2"></i>O'zbekiston statistikasi</h5>
+                    <p class="mb-0">&copy; 2025 Barcha huquqlar himoyalangan</p>
+                </div>
+                <div class="social-links">
+                    <p class="mb-0">Bog'lanish uchun:</p>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="{% static 'js/uzbekistan-map.js' %}"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Gender button functionality
+        document.querySelectorAll('.gender-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Add functionality to update dashboard based on selection
+                const gender = this.dataset.gender;
+                console.log('Selected gender:', gender);
+                // Here you would typically call a function to update the map/data
+            });
+        });
+
+        // Year slider
+    </script>
+</body>
+</html>

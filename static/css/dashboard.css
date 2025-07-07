@@ -1,0 +1,436 @@
+/* Main dashboard styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navigation active link styling */
+a.nav-link.active, 
+a.nav-link.px-2.link-dark.active {
+    font-weight: bold !important;
+    color: #166cb3 !important;
+    border-bottom: 2px solid #166cb3 !important;
+    background-color: #e6f0fa !important;
+    padding-bottom: 5px !important;
+}
+
+.container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Gender buttons styling */
+.gender-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gender-btn {
+    background-color: #e1e8f0;
+    border: none;
+    color: #333;
+    padding: 8px 30px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.gender-btn.active {
+    background-color: #7596c5;
+    color: white;
+}
+
+/* Timeline styling */
+.timeline-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.timeline {
+    position: relative;
+    width: 70%;
+    margin: 0 15px;
+}
+
+.year-label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.year-label.left {
+    text-align: right;
+}
+
+.year-label.right {
+    text-align: left;
+}
+
+.current-year {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    font-weight: bold;
+    background: #4a90e2;
+    color: white;
+    padding: 3px 15px;
+    border-radius: 0;
+}
+
+/* Vertical Age Range Slider Styling */
+.vertical-age-range-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+    padding: 0;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.age-range-display {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    width: 200px!important;
+}
+
+.current-age-range {
+    background: #4a90e2;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 0;
+}
+
+.vertical-slider-wrapper {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    margin: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+
+.vertical-slider {
+    position: absolute;
+    height: 100%;
+    width: 30px;
+    margin: 0 10px;
+    pointer-events: auto;
+    /* Reset any transforms */
+    transform: none;
+    /* Standard vertical slider properties */
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    writing-mode: bt-lr; /* For Firefox */
+}
+
+/* Add custom styling to make the slider look nicer */
+.vertical-slider {
+    background: transparent;
+}
+
+/* Turn off default styling */
+.vertical-slider::-webkit-slider-runnable-track {
+    background: transparent;
+    border: none;
+    height: 400px;
+    cursor: pointer;
+}
+
+.vertical-slider::-moz-range-track {
+    background: transparent;
+    border: none;
+    height: 400px;
+    cursor: pointer;
+}
+
+/* Customize the slider thumb */
+.vertical-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #4a90e2;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+}
+
+.vertical-slider::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: #4a90e2;
+    border: 2px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+}
+
+#age-min-slider {
+    z-index: 2;
+    height: 100% !important;
+}
+
+#age-max-slider.d-none {
+    display: none !important;
+}
+
+.age-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.age-label.top {
+    margin-bottom: 0;
+}
+
+.age-label.bottom {
+    margin-top: 0;
+}
+
+/* Map styling */
+.map-container {
+    position: relative;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    height: 500px;
+    overflow: hidden;
+}
+
+/* Tooltip styling */
+.region-tooltip {
+    position: absolute;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: opacity 0.2s;
+    text-align: left;
+    min-width: 180px;
+    max-width: 250px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.tooltip-header {
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+.tooltip-content {
+    padding: 10px 12px;
+    line-height: 1.5;
+}
+
+.tooltip-content div {
+    margin-bottom: 4px;
+}
+
+.tooltip-content strong {
+    color: #2d6ca2;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#map svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Region */
+.region {
+    fill: #e1e1e1;
+    stroke: #fff;
+    stroke-width: 0.5;
+    transition: fill 0.3s ease;
+}
+
+.region:hover {
+    fill: #d0d0d0;
+    cursor: pointer;
+}
+
+.region.active {
+    fill: #5172a1;
+    stroke: #fff;
+    stroke-width: 1;
+}
+
+/* Region information overlay */
+.region-info-overlay {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 0;
+    font-size: 14px;
+    color: #333;
+    z-index: 10;
+}
+
+.region-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #1d4e89;
+}
+
+.region-stats {
+    margin-bottom: 5px;
+}
+
+/* Country statistics */
+.country-stats {
+    position: absolute;
+    bottom: 50px;
+    left: 30px;
+    font-size: 14px;
+    color: #333;
+    z-index: 10;
+}
+
+.stats-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stats-total {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Density legend */
+.density-legend {
+    display: flex;
+    margin-top: 15px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.legend-text {
+    font-size: 12px;
+}
+
+/* Legend colors */
+.legend-color.c1 { background-color: #df7452; }
+.legend-color.c2 { background-color: #eeb04b; }
+.legend-color.c3 { background-color: #a2c65a; }
+.legend-color.c4 { background-color: #166cb3; }
+
+/* Population density classes for the map */
+.region-density-0 { fill: #e1e1e1; }
+.region-density-1 { fill: #df7452; }
+.region-density-2 { fill: #eeb04b; }
+.region-density-3 { fill: #a2c65a; }
+.region-density-4 { fill: #166cb3; }
+
+/* Age range visualization */
+.age-range-visualization {
+    height: 580px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 0 20px;
+}
+
+.age-bar-container {
+    flex-grow: 1;
+    width: 30px;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    position: relative;
+}
+
+.age-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #4a90e2;
+    height: 60%;
+}
+
+.age-label {
+    text-align: center;
+    padding: 5px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.age-label.top {
+    margin-bottom: 10px;
+}
+
+.age-label.bottom {
+    margin-top: 10px;
+}
+
+/* Age range markers */
+.marker {
+    position: absolute;
+    left: -10px;
+    width: 50px;
+    height: 3px;
+    background-color: #4a90e2;
+}
+
+.youth-marker {
+    bottom: 33%;
+}
+
+.child-marker {
+    bottom: 5%;
+}
+
+/* Form elements customization */
+.form-range::-webkit-slider-thumb {
+    background: #4a90e2;
+}
+
+.form-range::-moz-range-thumb {
+    background: #4a90e2;
+}

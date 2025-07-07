@@ -1,0 +1,17 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+  <h2>XLSX fayldan import qilish</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="apply" class="default">Import</button>
+  </form>
+  <p><b>Fayl ustunlari quyidagicha bo'lishi shart:</b></p>
+  <ul>
+    <li><b>Age</b> (masalan: 0-4 yoki 20-24 yoki 85+)</li>
+    <li><b>Year</b> (masalan: 2025)</li>
+    <li><b>Genders</b> (Male, Female yoki Umumiy)</li>
+    <li><b>population</b> (masalan: 12345)</li>
+  </ul>
+  <p>Tanlangan region uchun statistikalar import qilinadi yoki yangilanadi.</p>
+{% endblock %} 

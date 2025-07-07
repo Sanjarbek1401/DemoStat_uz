@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <h2>{% trans "Import Statistics Excel File" %}</h2>
+        <div class="form-row">
+            <p>
+                Upload an Excel file with the following columns:
+                <ul>
+                    <li><strong>year</strong>: Year of the statistics data (e.g., 2021)</li>
+                    <li><strong>region</strong>: Name of the region in Uzbekistan</li>
+                    <li><strong>age_min</strong>: Minimum age for the age range</li>
+                    <li><strong>age_max</strong>: Maximum age for the age range (leave empty for "85+" ranges)</li>
+                    <li><strong>gender</strong>: Gender category (jami, erkak, or ayol)</li>
+                    <li><strong>population</strong>: Population count for the given criteria</li>
+                </ul>
+            </p>
+        </div>
+        <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                {{ form.file.errors }}
+                <label for="id_file" class="required">{{ form.file.label }}:</label>
+                {{ form.file }}
+            </div>
+            <div class="submit-row">
+                <input type="submit" class="default" value="{% trans 'Upload File' %}" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

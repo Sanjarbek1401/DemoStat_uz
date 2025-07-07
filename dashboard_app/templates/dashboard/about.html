@@ -1,0 +1,587 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'zbekiston Demografik Ma'lumotlar Dashbordi - Biz Haqimizda</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #00a8ff;
+            --accent-color: #4834d4;
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --hover-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo img {
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-bg);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-bg);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Cards */
+        .modern-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-bg);
+        }
+
+        .modern-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Features List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            background: #f8f9fa;
+            padding-left: 2.5rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+            width: 25px;
+            height: 25px;
+            background: var(--gradient-bg);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background: var(--gradient-bg);
+            color: white;
+            padding: 60px 0;
+            margin: 4rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .social-media a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .social-media a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .modern-card {
+                padding: 1.5rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <a href="/" class="d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-chart-line fa-2x text-primary me-2"></i>
+                    <span class="fw-bold text-dark">DemoStat UZ</span>
+                </a>
+            </div>
+            <nav class="d-flex">
+                <ul class="nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a href="/" class="nav-link {% if current_page == 'home' %}active{% endif %}">Bosh sahifa</a></li>
+                    <li class="nav-item"><a href="/#dashboard" class="nav-link">Interaktiv xarita</a></li>
+                    <li class="nav-item"><a href="/resources/" class="nav-link {% if current_page == 'resources' %}active{% endif %}">Resurslar</a></li>
+                    <li class="nav-item"><a href="/about/" class="nav-link {% if current_page == 'about' %}active{% endif %}">Biz haqimizda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Biz haqimizda</h1>
+                <p class="hero-subtitle">O'zbekiston demografik ma'lumotlarini zamonaviy texnologiyalar bilan tahlil qilish</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">14+</span>
+                        <span class="stat-label">Viloyat</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">30</span>
+                        <span class="stat-label">Yillik prognoz</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">35M+</span>
+                        <span class="stat-label">Aholi soni</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Onlayn kirish</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                
+                <div class="modern-card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h2 class="card-title">Loyiha maqsadi</h2>
+                    <p class="card-text">Ushbu dashboard O'zbekiston Respublikasining 2021-2050 yillar oralig'idagi demografik ko'rsatkichlarini tahlil qilish va prognozlash imkoniyatini beradi. Zamonaviy vizualizatsiya vositalari yordamida barcha viloyatlar bo'yicha aholining yosh, jins va hududiy taqsimotini interaktiv ko'rinishda kuzatish mumkin. Platform orqali demografik o'zgarishlarni real vaqtda kuzatib boring va kelajak uchun strategik qarorlar qabul qiling.</p>
+                </div>
+                
+                <div class="modern-card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h2 class="card-title">Ma'lumotlar manbai</h2>
+                    <p class="card-text">Dashboardda ishlatilgan barcha ma'lumotlar O'zbekiston Respublikasi Davlat Statistika qo'mitasi tomonidan taqdim etilgan rasmiy ma'lumotlar asosida tayyorlangan. Prognoz ma'lumotlari UNESCO va BMT demografik modellariga asoslanadi. Ma'lumotlar muntazam yangilanib turadi va eng yuqori sifat standartlariga javob beradi.</p>
+                </div>
+                
+                <div class="modern-card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h2 class="card-title">Dashboard imkoniyatlari</h2>
+                    <p class="card-text mb-3">Dashborddan foydalanish uchun quyidagi kuchli imkoniyatlar mavjud:</p>
+                    <ul class="feature-list">
+                        <li><strong>Jins bo'yicha filtrlash:</strong> Jami aholi, erkaklar yoki ayollar bo'yicha ma'lumotlarni alohida tahlil qilish</li>
+                        <li><strong>Vaqt oralig'i tanlash:</strong> 2021-2050 yillar oralig'ida istalgan davr ma'lumotlarini ko'rish</li>
+                        <li><strong>Yosh guruhlari tahlili:</strong> Turli yosh kategoriyalaridagi aholi dinamikasini kuzatish</li>
+                        <li><strong>Interaktiv xarita:</strong> O'zbekiston xaritasi orqali har bir viloyat bo'yicha batafsil statistika</li>
+                        <li><strong>Grafik vizualizatsiya:</strong> Zamonaviy diagramma va grafiklar orqali ma'lumotlarni ko'rish</li>
+                        <!-- <li><strong>Ma'lumotlarni eksport:</strong> Tahlil natijalarini Excel yoki PDF formatida yuklab olish</li> -->
+                    </ul>
+                </div>
+                
+                <div class="modern-card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h2 class="card-title">Biz bilan bog'laning</h2>
+                    <p class="card-text mb-4">Dashboard bo'yicha qo'shimcha savollar, takliflar yoki texnik yordam uchun bizning mutaxassislarimiz bilan bog'laning:</p>
+                    
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h5>Elektron pochta</h5>
+                            <p class="mb-0">aholiprognozi2050@gmail.com</p>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <h5>Telefon</h5>
+                            <p class="mb-0">+99871 239-28-35</p>
+                        </div>
+                        
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h5>Manzil</h5>
+                            <p class="mb-0">Toshkent shahri Islom karimov ko'chasi 49-uy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-chart-line fa-2x text-primary me-3"></i>
+                        <h4 class="mb-0">DemoStat UZ</h4>
+                    </div>
+                    <p class="text-light opacity-75 mb-0">&copy; 2025 O'zbekiston demografik statistikasi</p>
+                    <p class="small text-light opacity-50">Barcha huquqlar himoyalangan</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-media d-flex gap-3 justify-content-md-end justify-content-start">
+                        <!-- <a href="#" title="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" title="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a> -->
+                        <a href="#" title="Telegram">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current) + (target >= 1000000 ? 'M+' : target >= 1000 ? 'K+' : target === 30 ? '' : '+');
+            }, 20);
+        }
+
+        // Animate counters when they come into view
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const text = entry.target.textContent;
+                    let number = parseInt(text.replace(/[^0-9]/g, ''));
+                    if (text.includes('M')) number *= 1000000;
+                    else if (text.includes('K')) number *= 1000;
+                    
+                    entry.target.textContent = '0';
+                    animateCounter(entry.target, number);
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statNumbers.forEach(stat => {
+            statObserver.observe(stat);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects for cards
+        document.querySelectorAll('.modern-card, .contact-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

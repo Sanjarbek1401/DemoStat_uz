@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resurslar - O'zbekiston Demografik Dashbordi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <style>
+        body { padding-top: 70px; background-color: #f8f9fa; }
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .resource-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        .resource-title {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-chart-line me-2"></i>
+                DemoStat UZ
+            </a>
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item"><a href="/" class="nav-link">Bosh sahifa</a></li>
+                    <li class="nav-item"><a href="/#dashboard" class="nav-link">Interaktiv Xarita</a></li>
+                    <li class="nav-item"><a href="/resources/" class="nav-link active">Resurslar</a></li>
+                    <li class="nav-item"><a href="/about/" class="nav-link">Biz haqimizda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <h1 class="mb-5 text-center">Foydali Resurslar va Ma'lumotlar</h1>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="resource-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-database resource-icon me-3"></i>
+                        <h5 class="resource-title mb-0">Ochiq Ma'lumotlar Portali</h5>
+                    </div>
+                    <p>O'zbekiston Respublikasining ochiq ma'lumotlar portali. Demografiya, iqtisodiyot va boshqa sohalardagi rasmiy statistik ma'lumotlar.</p>
+                    <a href="https://data.gov.uz/" class="btn btn-primary" target="_blank">Portalga o'tish</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="resource-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-building-columns resource-icon me-3"></i>
+                        <h5 class="resource-title mb-0">Davlat Statistika Qo'mitasi</h5>
+                    </div>
+                    <p>O'zbekiston Respublikasi Davlat statistika qo'mitasining rasmiy veb-sayti. Eng so'nggi demografik hisobotlar va nashrlar.</p>
+                    <a href="https://stat.uz/" class="btn btn-primary" target="_blank">Saytga o'tish</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="resource-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-globe-asia resource-icon me-3"></i>
+                        <h5 class="resource-title mb-0">BMT Aholishunoslik Jamg'armasi (UNFPA)</h5>
+                    </div>
+                    <p>BMTning O'zbekistondagi Aholishunoslik Jamg'armasi. Global va mintaqaviy demografik tadqiqotlar va loyihalar.</p>
+                    <a href="https://uzbekistan.unfpa.org/" class="btn btn-primary" target="_blank">Saytga o'tish</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="resource-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-book-open resource-icon me-3"></i>
+                        <h5 class="resource-title mb-0">Demografik Yillik To'plamlar</h5>
+                    </div>
+                    <p>Statistika qo'mitasi tomonidan nashr etiladigan yillik demografik to'plamlar. Batafsil tahliliy ma'lumotlar.</p>
+                    <a href="https://stat.uz/uz/rasmiy-statistika/demography" class="btn btn-primary" target="_blank">Nashrlarni ko'rish</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDF fayllar ro'yxati (sahifa oxirida) -->
+        <div class="row g-4 mt-5">
+            {% for pdf in pdfs %}
+            <div class="col-md-6">
+                <div class="resource-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-file-pdf resource-icon me-3"></i>
+                        <h5 class="resource-title mb-0">{{ pdf.title }}</h5>
+                    </div>
+                    <p>{{ pdf.description|truncatewords:30 }}</p>
+                    <a href="{{ pdf.pdf_file.url }}" class="btn btn-primary" target="_blank">Batafsil</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>Hozircha  resurslar mavjud emas.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> 
